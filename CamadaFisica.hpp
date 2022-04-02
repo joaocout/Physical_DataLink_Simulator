@@ -1,18 +1,21 @@
-#ifndef CAMADAFISICA // include guard
+#ifndef CAMADAFISICA
 #define CAMADAFISICA
 
-void main();
+#include <vector>
+
+using namespace std;
+
 void AplicacaoTransmissora();
 void CamadaDeAplicacaoTransmissora(string mensagem);
 void CamadaFisicaTransmissora(int quadro[]);
-int[] CamadaFisicaTransmissoraCodificacaoBinaria(int quadro[]);
-int[] CamadaFisicaTransmissoraCodificacaoManchester(int quadro[]);
-int[] CamadaFisicaTransmissoraCodificacaoBipolar(int quadro[]);
+vector<int> CamadaFisicaTransmissoraCodificacaoBinaria(int quadro[]);
+vector<int> CamadaFisicaTransmissoraCodificacaoManchester(int quadro[]);
+vector<int> CamadaFisicaTransmissoraCodificacaoBipolar(int quadro[]);
 void MeioDeComunicacao(int fluxoBrutoDeBits[]);
 void CamadaFisicaReceptora(int quadro[]);
-int[] CamadaFisicaReceptoraDecodificacaoBinaria(int quadro[]);
-int[] CamadaFisicaReceptoraDecodificacaoManchester(int quadro[]);
-int[] CamadaFisicaReceptoraDecodificacaoBipolar(int quadro[]);
+vector<int> CamadaFisicaReceptoraDecodificacaoBinaria(int quadro[]);
+vector<int> CamadaFisicaReceptoraDecodificacaoManchester(int quadro[]);
+vector<int> CamadaFisicaReceptoraDecodificacaoBipolar(int quadro[]);
 void CamadaDeAplicacaoReceptora(string mensagem);
 void AplicacaoReceptora(int quadro[]);
 

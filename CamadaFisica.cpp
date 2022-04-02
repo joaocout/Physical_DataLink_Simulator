@@ -1,11 +1,15 @@
 #include <iostream>
 #include <string>
+#include <bitset>
+#include <vector>
+
 #include "CamadaFisica.hpp"
 
 using namespace std;
 
-void main(){
+int main(){
     AplicacaoTransmissora();
+    return 0;
 }
 
 void AplicacaoTransmissora(){
@@ -17,11 +21,24 @@ void AplicacaoTransmissora(){
 }
 
 void CamadaDeAplicacaoTransmissora(string mensagem){
-    int quadro[] = mensagem;
-    CamadaFisicaTransmissora(quadro);
+    
+    string bits;
+    for(char c: mensagem){
+        //convertendo cada char pra bits
+        bits.append((bitset<8>(c)).to_string());
+    }
+
+    //mensagem convertida pra bits
+    bitset<8> quadro(bits);
+
+    cout << quadro << endl;
+
+    //CamadaFisicaTransmissora(quadro);
 }
 
-void CamadaFisicaTransmissora(int quadro[]){
+
+/*
+void CamadaFisicaTransmissora(vector<int> quadro){
     int tipoDeCodificacao = 0;
     int fluxoBrutoDeBits[];
 
@@ -40,18 +57,6 @@ void CamadaFisicaTransmissora(int quadro[]){
         break;
     }
     MeioDeComunicacao(fluxoBrutoDeBits);
-}
-
-int[] CamadaFisicaTransmissoraCodificacaoBinaria(int quadro[]){
-    
-}
-
-int[] CamadaFisicaTransmissoraCodificacaoManchester(int quadro[]){
-    
-}
-
-int[] CamadaFisicaTransmissoraCodificacaoBipolar(int quadro[]){
-    
 }
 
 void MeioDeComunicacao(int fluxoBrutoDeBits[]){
@@ -89,6 +94,23 @@ void CamadaFisicaReceptora(int quadro[]){
     CamadaDeAplicacaoReceptora(fluxoBrutoDeBits);
 }
 
+void CamadaDeAplicacaoReceptora(int quadro[]){
+    string mensagem = quadro[];
+    AplicacaoReceptora(mensagem);
+}
+
+int* CamadaFisicaTransmissoraCodificacaoBinaria(int quadro[]){
+    
+}
+
+int* CamadaFisicaTransmissoraCodificacaoManchester(int quadro[]){
+    
+}
+
+int* CamadaFisicaTransmissoraCodificacaoBipolar(int quadro[]){
+    
+}
+
 int[] CamadaFisicaReceptoraCodificacaoBinaria(int quadro[]){
     
 }
@@ -101,12 +123,7 @@ int[] CamadaFisicaReceptoraCodificacaoBipolar(int quadro[]){
     
 }
 
-void CamadaDeAplicacaoReceptora(int quadro[]){
-    string mensagem = quadro[];
-    AplicacaoReceptora(mensagem);
-}
-
 void AplicacaoReceptora(string mensagem){
     cout << "A mensagem recebida foi:" << mensagem << endl;
 }
-
+*/
