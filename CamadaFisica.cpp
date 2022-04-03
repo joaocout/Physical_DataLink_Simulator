@@ -16,7 +16,7 @@ int main(){
 
 void AplicacaoTransmissora(){
     string mensagem;
-    cout << "Digite uma mensagem:" << endl;
+    std::cout << "Digite uma mensagem:" << endl;
     //usando getline, para que espacos tambem sejam lidos
     getline(std::cin, mensagem);
     
@@ -44,8 +44,16 @@ void CamadaDeAplicacaoTransmissora(string mensagem){
 
 
 void CamadaFisicaTransmissora(vector<int> quadro){
-    int tipoDeCodificacao = 1;
+    int tipoDeCodificacao = 2;
     vector<int> fluxoBrutoDeBits;
+
+
+    cout << endl << "Mensagem após transformação para bits: " << endl;
+    for(int bit: quadro){
+        cout << bit;
+    }
+    cout << endl;
+
 
     switch (tipoDeCodificacao)
     {
@@ -61,6 +69,15 @@ void CamadaFisicaTransmissora(vector<int> quadro){
     default:
         break;
     }
+
+
+    cout << endl << "Quadro codificado: " << endl;
+    for(int value: fluxoBrutoDeBits) {
+        cout << value;
+    }
+    cout << endl;
+
+
     MeioDeComunicacao(fluxoBrutoDeBits);
 }
 
@@ -95,8 +112,37 @@ vector<int> CamadaFisicaTransmissoraCodificacaoManchester(vector<int> quadro){
 }
 
 vector<int> CamadaFisicaTransmissoraCodificacaoBipolar(vector<int> quadro){
+    //valores podem ser 0, 1 e -1
+    vector<int> result;
 
-    return quadro;
+    // salvando valor do ultimo bit 1
+    int last_value = 0;
+    for(int bit: quadro){
+        //se o bit for 0, o valor retorna pra zero
+        if(bit == 0) {
+            result.push_back(bit);
+        }
+        //se nao, o valor pode ser 1 ou -1
+        else {
+            //se ainda nao houveram bits 1, o valor eh 1, e setamos previous pra 1
+           if(last_value == 0) {
+               result.push_back(1);
+               last_value = 1;
+           } 
+           // se o anterior foi 1, o proximo deve ser -1
+           else if(last_value == 1) {
+               result.push_back(-1);
+               last_value = -1;
+           }
+           // se o anterior foi -1, o proximo deve ser 1
+           else {
+               result.push_back(1);
+               last_value = 1;
+           }
+        }
+    }
+
+    return result;
 }
 
 
@@ -112,7 +158,7 @@ void MeioDeComunicacao(vector<int> fluxoBrutoDeBits){
 
 
 void CamadaFisicaReceptora(vector<int> quadro){
-    int tipoDeCodificacao = 1;
+    int tipoDeCodificacao = 2;
     vector<int> fluxoBrutoDeBits;
 
     switch (tipoDeCodificacao)
@@ -129,6 +175,14 @@ void CamadaFisicaReceptora(vector<int> quadro){
     default:
         break;
     }
+
+
+    cout << endl << "Quadro após decodificação: " << endl;
+    for(int bit: fluxoBrutoDeBits) {
+        cout << bit;
+    }
+    cout << endl;
+
     CamadaDeAplicacaoReceptora(fluxoBrutoDeBits);
 }
 
@@ -160,7 +214,20 @@ vector<int> CamadaFisicaReceptoraDecodificacaoManchester(vector<int> quadro){
 }
 
 vector<int> CamadaFisicaReceptoraDecodificacaoBipolar(vector<int> quadro){
-    return quadro;
+    vector<int> result;
+
+    for(int value: quadro) {
+        if(value!=0){
+            // se o valor for 1, ou -1, era originalmente 1
+            result.push_back(1);
+        }
+            // se o valor for 0, era originalmente 0
+        else {
+            result.push_back(0);
+        }
+    }   
+    return result;
+
 }
 
 
@@ -175,7 +242,6 @@ void CamadaDeAplicacaoReceptora(vector<int> quadro){
 
     //transformando os bitsets de tamanho 8, de volta para char, de acordo com a tabela ascii
     for(unsigned int i=0; i<string_quadro.size(); i+=8) {
-        cout << string_quadro.substr(i, 8) << ":" <<(char) bitset<8>(string_quadro.substr(i, 8)).to_ulong() << endl;
         mensagem.push_back((char)bitset<8>(string_quadro.substr(i, 8)).to_ullong());
     }
 
@@ -184,5 +250,5 @@ void CamadaDeAplicacaoReceptora(vector<int> quadro){
 
 
 void AplicacaoReceptora(string mensagem){
-    cout << "A mensagem recebida foi: " << mensagem << endl;
+    cout << endl << "A mensagem recebida foi: " << mensagem << endl;
 }
