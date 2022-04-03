@@ -1,22 +1,23 @@
-#ifndef CAMADAFISICA
-#define CAMADAFISICA
-
 #include <vector>
+#include <bitset>
 
 using namespace std;
 
+#ifndef CAMADAFISICA
+#define CAMADAFISICA
+
 void AplicacaoTransmissora();
 void CamadaDeAplicacaoTransmissora(string mensagem);
-void CamadaFisicaTransmissora(int quadro[]);
-vector<int> CamadaFisicaTransmissoraCodificacaoBinaria(int quadro[]);
-vector<int> CamadaFisicaTransmissoraCodificacaoManchester(int quadro[]);
-vector<int> CamadaFisicaTransmissoraCodificacaoBipolar(int quadro[]);
-void MeioDeComunicacao(int fluxoBrutoDeBits[]);
+void CamadaFisicaTransmissora(vector<int> quadro);
+vector<int> CamadaFisicaTransmissoraCodificacaoBinaria(vector<int> quadro);
+vector<int> CamadaFisicaTransmissoraCodificacaoManchester(vector<int> quadro);
+vector<int> CamadaFisicaTransmissoraCodificacaoBipolar(vector<int> quadro);
+void MeioDeComunicacao(vector<int> fluxoBrutoDeBits);
 void CamadaFisicaReceptora(int quadro[]);
-vector<int> CamadaFisicaReceptoraDecodificacaoBinaria(int quadro[]);
-vector<int> CamadaFisicaReceptoraDecodificacaoManchester(int quadro[]);
-vector<int> CamadaFisicaReceptoraDecodificacaoBipolar(int quadro[]);
+vector<int> CamadaFisicaReceptoraDecodificacaoBinaria(vector<int> quadro);
+vector<int> CamadaFisicaReceptoraDecodificacaoManchester(vector<int> quadro);
+vector<int> CamadaFisicaReceptoraDecodificacaoBipolar(vector<int> quadro);
 void CamadaDeAplicacaoReceptora(string mensagem);
-void AplicacaoReceptora(int quadro[]);
+void AplicacaoReceptora(vector<int> quadro);
 
 #endif

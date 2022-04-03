@@ -15,32 +15,31 @@ int main(){
 void AplicacaoTransmissora(){
     string mensagem;
     cout << "Digite uma mensagem:" << endl;
-    cin >> mensagem;
-
+    getline(std::cin, mensagem);
+    
     CamadaDeAplicacaoTransmissora(mensagem);
 }
 
 void CamadaDeAplicacaoTransmissora(string mensagem){
+    vector<int> quadro;
     
-    string bits;
+    //convertendo cada char para bits e salvando no vector quadro
     for(char c: mensagem){
-        //convertendo cada char pra bits
-        bits.append((bitset<8>(c)).to_string());
+        //caracter ja transformado para bits, de acordo com a tabela ascii
+        string ascii_code = bitset<8>(c).to_string();
+        //salvando no vector como inteiro
+        for(char c: ascii_code){
+            quadro.push_back(c - '0');
+        }
     }
 
-    //mensagem convertida pra bits
-    bitset<8> quadro(bits);
-
-    cout << quadro << endl;
-
-    //CamadaFisicaTransmissora(quadro);
+    CamadaFisicaTransmissora(quadro);
 }
 
 
-/*
 void CamadaFisicaTransmissora(vector<int> quadro){
     int tipoDeCodificacao = 0;
-    int fluxoBrutoDeBits[];
+    vector<int> fluxoBrutoDeBits;
 
     switch (tipoDeCodificacao)
     {
@@ -59,20 +58,39 @@ void CamadaFisicaTransmissora(vector<int> quadro){
     MeioDeComunicacao(fluxoBrutoDeBits);
 }
 
-void MeioDeComunicacao(int fluxoBrutoDeBits[]){
-    int fluxoBrutoDeBitsPontoA[], fluxoBrutoDeBitsPontoB[];
+vector<int> CamadaFisicaTransmissoraCodificacaoBinaria(vector<int> quadro){
+    vector<int> result;
+
+    for(int i=0; i<quadro.size(); i++) {
+        result.push_back(quadro[i]);
+    }
+
+    return result;
+}
+
+vector<int> CamadaFisicaTransmissoraCodificacaoManchester(vector<int> quadro){
+    vector<int> result;
+    return result;
+}
+
+vector<int> CamadaFisicaTransmissoraCodificacaoBipolar(vector<int> quadro){
+    vector<int> result;
+    return result;
+}
+
+void MeioDeComunicacao(vector<int> fluxoBrutoDeBits){
+    vector<int> fluxoBrutoDeBitsPontoA, fluxoBrutoDeBitsPontoB;
 
     fluxoBrutoDeBitsPontoA = fluxoBrutoDeBits;
 
-    while (fluxoBrutoDeBitsPontoB.length != fluxoBrutoDeBitsPontoA)
-    {
-        fluxoBrutoDeBitsPontoB += fluxoBrutoDeBitsPontoA;
+    for(int value : fluxoBrutoDeBitsPontoA) {
+        fluxoBrutoDeBitsPontoB.push_back(value);
     }
 
-    CamadaFisicaReceptora(fluxoBrutoDeBitsPontoB);
-    
+    // CamadaFisicaReceptora(fluxoBrutoDeBitsPontoB);
 }
 
+/*
 void CamadaFisicaReceptora(int quadro[]){
     int tipoDeCodificacao = 0;
     int fluxoBrutoDeBits[];
@@ -99,17 +117,6 @@ void CamadaDeAplicacaoReceptora(int quadro[]){
     AplicacaoReceptora(mensagem);
 }
 
-int* CamadaFisicaTransmissoraCodificacaoBinaria(int quadro[]){
-    
-}
-
-int* CamadaFisicaTransmissoraCodificacaoManchester(int quadro[]){
-    
-}
-
-int* CamadaFisicaTransmissoraCodificacaoBipolar(int quadro[]){
-    
-}
 
 int[] CamadaFisicaReceptoraCodificacaoBinaria(int quadro[]){
     
