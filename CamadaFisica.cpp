@@ -25,6 +25,8 @@ void AplicacaoTransmissora(){
 
 
 void CamadaDeAplicacaoTransmissora(string mensagem){
+    //usando vector de int, ao inves de int[], por ser um recurso padrao do c++
+    //vector tem tamanho variavel, e nos auxilia com certas funcionalidades
     vector<int> quadro;
     
     //convertendo cada char para bits e salvando no vector quadro
