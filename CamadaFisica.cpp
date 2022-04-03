@@ -69,7 +69,7 @@ vector<int> CamadaFisicaTransmissoraCodificacaoBinaria(vector<int> quadro){
 
 vector<int> CamadaFisicaTransmissoraCodificacaoManchester(vector<int> quadro){
     vector<int> result;
-    bitset<2> clock(string("01"));
+    bitset<2> clock("01");
     
     for(int bit: quadro) {
         //XOR do bit com o clock
@@ -135,7 +135,22 @@ vector<int> CamadaFisicaReceptoraDecodificacaoBinaria(vector<int> quadro){
 }
 
 vector<int> CamadaFisicaReceptoraDecodificacaoManchester(vector<int> quadro){
-    return quadro;
+    vector<int> result;
+
+    const string clock = "01";
+
+    for(unsigned int i=0; i<quadro.size(); i+=2) {
+        string bit_pair = to_string(quadro[i]) + to_string(quadro[i+1]);
+        // se o par de bits for igual ao clock, retornamos 0
+        if(bit_pair == clock) {
+            result.push_back(0);
+        }
+        // se o par de bits for diferente do clock, retornamos 1
+        else{
+            result.push_back(1);
+        }
+    }
+    return result;
 }
 
 vector<int> CamadaFisicaReceptoraDecodificacaoBipolar(vector<int> quadro){
