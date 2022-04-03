@@ -58,23 +58,21 @@ void CamadaFisicaTransmissora(vector<int> quadro){
     MeioDeComunicacao(fluxoBrutoDeBits);
 }
 
+//binaria pode retornar os bits diretamente (?)
 vector<int> CamadaFisicaTransmissoraCodificacaoBinaria(vector<int> quadro){
-    vector<int> result;
-
-    for(int i=0; i<quadro.size(); i++) {
-        result.push_back(quadro[i]);
-    }
-
+    vector<int> result = quadro;
     return result;
 }
 
 vector<int> CamadaFisicaTransmissoraCodificacaoManchester(vector<int> quadro){
-    vector<int> result;
+    vector<int> result = quadro;
+
     return result;
 }
 
 vector<int> CamadaFisicaTransmissoraCodificacaoBipolar(vector<int> quadro){
-    vector<int> result;
+    vector<int> result = quadro;
+
     return result;
 }
 
@@ -87,7 +85,13 @@ void MeioDeComunicacao(vector<int> fluxoBrutoDeBits){
         fluxoBrutoDeBitsPontoB.push_back(value);
     }
 
-    // CamadaFisicaReceptora(fluxoBrutoDeBitsPontoB);
+
+    //chegou ate aqui
+    for(int i: fluxoBrutoDeBitsPontoB){
+        cout << i;
+    }
+
+    cout << endl;
 }
 
 /*
