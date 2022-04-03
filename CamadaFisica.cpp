@@ -7,20 +7,20 @@
 
 using namespace std;
 
-
+/*
 int main(){
     AplicacaoTransmissora();
     return 0;
 }
+*/
 
-
-void AplicacaoTransmissora(){
-    string mensagem;
-    std::cout << "Digite uma mensagem:" << endl;
+void AplicacaoTransmissora(string input){
+    //string mensagem;
+    //std::cout << "Digite uma mensagem:" << endl;
     //usando getline, para que espacos tambem sejam lidos
-    getline(std::cin, mensagem);
+    //getline(std::cin, mensagem);
     
-    CamadaDeAplicacaoTransmissora(mensagem);
+    CamadaDeAplicacaoTransmissora(input);
 }
 
 

@@ -1,57 +1,60 @@
 #include <gtkmm.h>
+#include <iostream>
+#include "CamadaFisica.hpp"
 
-class MyWindow : public Gtk::Window
+class Simulador : public Gtk::Window
 {
 
-    Gtk::Fixed m_fixed;
-    Gtk::Box m_box1, m_box2;
-    Gtk::Alignment m_alignment1;
-    Gtk::Entry m_entry1;
-    Gtk::Label m_label1;
-    Gtk::Button m_button1;
-    Gtk::Frame m_frame1;
-    Gtk::LinkButton m_linkbutton;
-    
+  Gtk::Fixed fixed;
+  Gtk::Box box, box_input;
+  Gtk::Alignment alignment;
+  Gtk::Entry entry;
+  Gtk::Label label;
+  Gtk::Button button;
+  Gtk::Frame frame;
 
-
-public:
-    MyWindow();
+  public:
+    Simulador();
     void set_hierarchy();
     void draw_widgets();
+  
+  protected:
+    void on_button_click();
+
 };
 
-MyWindow::MyWindow() : m_box1{Gtk::Orientation::ORIENTATION_VERTICAL}, m_box2{Gtk::Orientation::ORIENTATION_VERTICAL}
+Simulador::Simulador() : box{Gtk::Orientation::ORIENTATION_VERTICAL}, box_input{Gtk::Orientation::ORIENTATION_VERTICAL}
 {
     set_hierarchy();
     draw_widgets();
 }
 
-void MyWindow::set_hierarchy(){
-  // Window
-  add( m_fixed );
+void Simulador::on_button_click() {
+  string input = entry.get_text();
+  std::cout << input << std::endl;
 
-  // Fixed
-  m_fixed.add( m_frame1 );
-
-  // Frame 1
-  m_frame1.add( m_box1 );
-  m_frame1.set_label("UMA MAQUINA");
-
-  // Box 1
-  m_box1.add( m_alignment1 );
-  m_box1.add( m_label1 );
-  m_box1.add( m_button1 );
-
-  // Alignment 1
-  m_alignment1.add( m_box2 );
-
-  // Box 2
-  m_box2.pack_start( m_entry1, true, true, 0 );
+  AplicacaoTransmissora(input);
 
 }
 
-void MyWindow::draw_widgets(){
-  // Window
+void Simulador::set_hierarchy(){
+  add( fixed );
+
+  fixed.add( frame );
+
+  frame.add( box );
+  frame.set_label("Transmissor");
+
+  box.add( alignment );
+  box.add( label );
+  box.add( button );
+
+  alignment.add( box_input );
+
+  box_input.pack_start( entry, true, true, 0 );
+}
+
+void Simulador::draw_widgets(){
   set_title("Simulador");
   set_default_size( 300, 400 );
   set_visible( true );
@@ -59,53 +62,42 @@ void MyWindow::draw_widgets(){
   set_resizable( false );
   set_border_width( 6 );
 
-  // Fixed
-  m_fixed.set_size_request( 300, 400 );
-  m_fixed.set_visible( true );
-  m_fixed.set_can_focus( false );
+  fixed.set_size_request( 300, 400 );
+  fixed.set_visible( true );
+  fixed.set_can_focus( false );
 
-  // Frame 1
-  m_frame1.set_size_request( 100, 80 );
-  m_frame1.set_visible( true );
-  m_frame1.set_can_focus( false );
-  m_frame1.set_margin_end( 8 );
-  m_frame1.set_shadow_type( Gtk::ShadowType::SHADOW_IN );
-  m_frame1.set_label_align( 0.02 );
+  frame.set_size_request( 100, 80 );
+  frame.set_visible( true );
+  frame.set_can_focus( false );
+  frame.set_margin_end( 8 );
+  frame.set_label_align( 0.02 );
 
-  // Box 1
-  m_box1.set_visible( true );
-  m_box1.set_can_focus( false );
+  box.set_visible( true );
+  box.set_can_focus( false );
 
-  // Alignment 1
-  m_alignment1.set_size_request( 400, 62 );
-  m_alignment1.set_visible( true );
-  m_alignment1.set_can_focus( true );
-  m_alignment1.set_border_width( 10 );
+  alignment.set_size_request( 400, 62 );
+  alignment.set_visible( true );
+  alignment.set_can_focus( true );
+  alignment.set_border_width( 10 );
 
-  // Box 2
-  m_box2.set_visible( true );
-  m_box2.set_can_focus( false );
-  
+  box_input.set_visible( true );
+  box_input.set_can_focus( false );
 
-  // Entry 1
-  m_entry1.set_visible( true );
-  m_entry1.set_visibility( false );
-  m_entry1.set_can_focus( true );
-  m_entry1.set_placeholder_text("Insira sua mensagem");
-  m_entry1.set_input_purpose( Gtk::INPUT_PURPOSE_PASSWORD );
-  m_entry1.set_max_length( 32 );
+  entry.set_visible( true );
+  entry.set_can_focus( true );
+  entry.set_placeholder_text("Insira sua mensagem");
 
-  // Button 1
-  m_button1.set_label("XAMA");
-  m_button1.set_visible( true );
-  m_button1.set_can_focus( true );
-  m_button1.set_focus_on_click( true );
-  m_button1.set_border_width( 5 );
+  button.set_label("Enviar Mensagem");
+  button.set_visible( true );
+  button.set_can_focus( true );
+  button.set_focus_on_click( true );
+  button.set_border_width( 5 );
+  button.signal_clicked().connect(sigc::mem_fun(*this, &Simulador::on_button_click));
 }
 
 int main(int argc, char* argv[])
 {
-    auto app = Gtk::Application::create(argc, argv, "org.gtkmm.examples.base");
-    MyWindow window;
-    return app->run(window);
+    auto app = Gtk::Application::create(argc, argv, "tr1.simulador");
+    Simulador simulador;
+    return app->run(simulador);
 }

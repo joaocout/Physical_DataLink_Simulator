@@ -1,9 +1,8 @@
-all:
-	g++ -o out CamadaFisica.cpp -Wall -ansi -std=c++11
+all: CamadaFisica.o
+	g++ Simulador.cpp -o Simulador `pkg-config gtkmm-3.0 --cflags --libs` CamadaFisica.o
 
-test:
-	g++ Simulador.cpp -o interface `pkg-config gtkmm-3.0 --cflags --libs`
+CamadaFisica.o:
+	g++ -c CamadaFisica.cpp -Wall -ansi -std=c++11
 
 clear:
-	rm out
-
+	rm CamadaFisica.o Simulador 
