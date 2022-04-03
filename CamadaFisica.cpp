@@ -17,6 +17,7 @@ int main(){
 void AplicacaoTransmissora(){
     string mensagem;
     cout << "Digite uma mensagem:" << endl;
+    //usando getline, para que espacos tambem sejam lidos
     getline(std::cin, mensagem);
     
     CamadaDeAplicacaoTransmissora(mensagem);
@@ -72,7 +73,8 @@ vector<int> CamadaFisicaTransmissoraCodificacaoManchester(vector<int> quadro){
     bitset<2> clock("01");
     
     for(int bit: quadro) {
-        //XOR do bit com o clock
+        //XOR do bit com os bits do clock
+
         //se o bit for 1, invertemos o clock
         if(bitset<1> (bit).any()) {
             for(char c: (~clock).to_string()) {
@@ -137,9 +139,11 @@ vector<int> CamadaFisicaReceptoraDecodificacaoBinaria(vector<int> quadro){
 vector<int> CamadaFisicaReceptoraDecodificacaoManchester(vector<int> quadro){
     vector<int> result;
 
+    //clock como string de bits pra facilitar comparacao
     const string clock = "01";
 
     for(unsigned int i=0; i<quadro.size(); i+=2) {
+        //criando par de bits atual
         string bit_pair = to_string(quadro[i]) + to_string(quadro[i+1]);
         // se o par de bits for igual ao clock, retornamos 0
         if(bit_pair == clock) {
@@ -161,7 +165,7 @@ vector<int> CamadaFisicaReceptoraDecodificacaoBipolar(vector<int> quadro){
 void CamadaDeAplicacaoReceptora(vector<int> quadro){
     string mensagem = "";
 
-    //transformando o quadro pra string, pra facilitar conversao
+    //transformando o quadro pra string de bits, pra facilitar conversao
     string string_quadro = "";
     for (int bit: quadro) {
         string_quadro.append(to_string(bit));
@@ -173,7 +177,6 @@ void CamadaDeAplicacaoReceptora(vector<int> quadro){
         mensagem.push_back((char)bitset<8>(string_quadro.substr(i, 8)).to_ullong());
     }
 
-    //convertendo os bits de volta pra 
     AplicacaoReceptora(mensagem);
 }
 
