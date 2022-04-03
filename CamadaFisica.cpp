@@ -30,7 +30,7 @@ void CamadaDeAplicacaoTransmissora(string mensagem){
     for(char c: mensagem){
         //caracter ja transformado para bits, de acordo com a tabela ascii
         string ascii_code = bitset<8>(c).to_string();
-        //salvando no vector como inteiro
+        //salvando no vector, cada bit do codigo ascii, como inteiro
         for(char c: ascii_code){
             quadro.push_back(c - '0');
         }
@@ -68,7 +68,26 @@ vector<int> CamadaFisicaTransmissoraCodificacaoBinaria(vector<int> quadro){
 }
 
 vector<int> CamadaFisicaTransmissoraCodificacaoManchester(vector<int> quadro){
-    return quadro;
+    vector<int> result;
+    bitset<2> clock(string("01"));
+    
+    for(int bit: quadro) {
+        //XOR do bit com o clock
+        //se o bit for 1, invertemos o clock
+        if(bitset<1> (bit).any()) {
+            for(char c: (~clock).to_string()) {
+                result.push_back(c - '0');
+            }
+        }
+        //se for zero, o valor eh igual ao clock
+        else{
+            for(char c: clock.to_string()){
+                result.push_back(c - '0');
+            }
+        }
+    }
+
+    return result;
 }
 
 vector<int> CamadaFisicaTransmissoraCodificacaoBipolar(vector<int> quadro){
@@ -89,7 +108,7 @@ void MeioDeComunicacao(vector<int> fluxoBrutoDeBits){
 
 
 void CamadaFisicaReceptora(vector<int> quadro){
-    int tipoDeCodificacao = 0;
+    int tipoDeCodificacao = 1;
     vector<int> fluxoBrutoDeBits;
 
     switch (tipoDeCodificacao)
