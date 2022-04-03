@@ -13,11 +13,11 @@ vector<int> CamadaFisicaTransmissoraCodificacaoBinaria(vector<int> quadro);
 vector<int> CamadaFisicaTransmissoraCodificacaoManchester(vector<int> quadro);
 vector<int> CamadaFisicaTransmissoraCodificacaoBipolar(vector<int> quadro);
 void MeioDeComunicacao(vector<int> fluxoBrutoDeBits);
-void CamadaFisicaReceptora(int quadro[]);
+void CamadaFisicaReceptora(vector<int> quadro);
 vector<int> CamadaFisicaReceptoraDecodificacaoBinaria(vector<int> quadro);
 vector<int> CamadaFisicaReceptoraDecodificacaoManchester(vector<int> quadro);
 vector<int> CamadaFisicaReceptoraDecodificacaoBipolar(vector<int> quadro);
-void CamadaDeAplicacaoReceptora(string mensagem);
-void AplicacaoReceptora(vector<int> quadro);
+void CamadaDeAplicacaoReceptora(vector<int> quadro);
+void AplicacaoReceptora(string mensagem);
 
 #endif
