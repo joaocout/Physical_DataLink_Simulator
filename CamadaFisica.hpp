@@ -7,7 +7,7 @@ using namespace std;
 #define CAMADAFISICA
 
 
-void AplicacaoTransmissora(string input);
+void AplicacaoTransmissora(string input, int selected_encoding);
 
 void CamadaDeAplicacaoTransmissora(string mensagem);
 

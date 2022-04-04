@@ -14,12 +14,16 @@ int main(){
 }
 */
 
-void AplicacaoTransmissora(string input){
+int encoding;
+
+void AplicacaoTransmissora(string input, int selected_encoding){
     //string mensagem;
     //std::cout << "Digite uma mensagem:" << endl;
     //usando getline, para que espacos tambem sejam lidos
     //getline(std::cin, mensagem);
-    
+
+    encoding = selected_encoding;
+
     CamadaDeAplicacaoTransmissora(input);
 }
 
@@ -44,7 +48,7 @@ void CamadaDeAplicacaoTransmissora(string mensagem){
 
 
 void CamadaFisicaTransmissora(vector<int> quadro){
-    int tipoDeCodificacao = 2;
+    int tipoDeCodificacao = encoding;
     vector<int> fluxoBrutoDeBits;
 
 
@@ -158,7 +162,7 @@ void MeioDeComunicacao(vector<int> fluxoBrutoDeBits){
 
 
 void CamadaFisicaReceptora(vector<int> quadro){
-    int tipoDeCodificacao = 2;
+    int tipoDeCodificacao = encoding;
     vector<int> fluxoBrutoDeBits;
 
     switch (tipoDeCodificacao)
@@ -250,5 +254,5 @@ void CamadaDeAplicacaoReceptora(vector<int> quadro){
 
 
 void AplicacaoReceptora(string mensagem){
-    cout << endl << "A mensagem recebida foi: " << mensagem << endl;
+    cout << endl << "A mensagem recebida foi: " << mensagem << endl << endl;
 }
