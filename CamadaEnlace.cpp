@@ -3,12 +3,16 @@
 #include <bitset>
 #include <vector>
 #include "CamadaFisica.hpp"
+#include "CamadaEnlace.hpp"
+
+using namespace std;
 
 void CamadaEnlaceDadosTransmissora(vector<int> quadro){
     CamadaEnlaceDadosTransmissoraEnquadramento(quadro);
     CamadaEnlaceDadosTransmissoraControleDeErro(quadro);
     CamadaFisicaTransmissora(quadro);
 }
+
 void CamadaEnlaceDadosTransmissoraEnquadramento(vector<int> quadro){
     int tipoDeEnquadramento = 0;
     vector<int> quadroEnquadrado;
@@ -22,15 +26,16 @@ void CamadaEnlaceDadosTransmissoraEnquadramento(vector<int> quadro){
             break;
     }
 }
+
 void CamadaEnlaceDadosTransmissoraControleDeErro(vector<int> quadro){
 
 }
 
-void CamadaEnlaceDadosTransmissoraEnquadramentoContagemDeCaracteres(vector<int> quadro){
+vector<int> CamadaEnlaceDadosTransmissoraEnquadramentoContagemDeCaracteres(vector<int> quadro){
 
 }
 
-void CamadaEnlaceDadosTransmissoraEnquadramentoInsercaoDeBytes(vector<int> quadro){
+vector<int> CamadaEnlaceDadosTransmissoraEnquadramentoInsercaoDeBytes(vector<int> quadro){
 
 }
 
@@ -58,10 +63,10 @@ void CamadaEnlaceDadosReceptoraControleDeErro(vector<int> quadro){
 
 }
 
-void CamadaEnlaceDadosReceptoraEnquadramentoContagemDeCaracteres(vector<int> quadro){
+vector<int> CamadaEnlaceDadosReceptoraEnquadramentoContagemDeCaracteres(vector<int> quadro){
 
 }
 
-void CamadaEnlaceDadosReceptoraEnquadramentoInsercaoDeBytes(vector<int> quadro){
+vector<int> CamadaEnlaceDadosReceptoraEnquadramentoInsercaoDeBytes(vector<int> quadro){
 
 }
