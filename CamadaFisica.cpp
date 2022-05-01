@@ -151,10 +151,12 @@ vector<int> CamadaFisicaTransmissoraCodificacaoBipolar(vector<int> quadro){
 
 
 void MeioDeComunicacao(vector<int> fluxoBrutoDeBits){
+    int erro, porcentagemDeErros = 0;
     vector<int> fluxoBrutoDeBitsPontoA = fluxoBrutoDeBits, fluxoBrutoDeBitsPontoB;
 
     //passando os bits do ponto A para o ponto B
     for(int value : fluxoBrutoDeBitsPontoA) {
+        if((rand()%100) == )
         fluxoBrutoDeBitsPontoB.push_back(value);
     }
     CamadaFisicaReceptora(fluxoBrutoDeBitsPontoB);

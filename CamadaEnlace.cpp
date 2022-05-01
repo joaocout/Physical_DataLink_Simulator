@@ -23,6 +23,16 @@ void CamadaEnlaceDadosTransmissoraEnquadramento(vector<int> quadro){
     }
 }
 void CamadaEnlaceDadosTransmissoraControleDeErro(vector<int> quadro){
+    int tipoDeControleDeErro = 0;
+
+    switch(tipoDeControleDeErro){
+        case 0:
+            //bit de paridade
+            break;
+        case 1:
+            //CRC
+            break;
+    }
 
 }
 
@@ -32,6 +42,14 @@ void CamadaEnlaceDadosTransmissoraEnquadramentoContagemDeCaracteres(vector<int> 
 
 void CamadaEnlaceDadosTransmissoraEnquadramentoInsercaoDeBytes(vector<int> quadro){
 
+}
+
+void CamadaEnlaceDadosTransmissoraControleDeErroBitParidadePar(){
+
+}
+
+void CamadaEnlaceDadosTransmissoraControleDeErroCRC(){
+    //polinomio CRC-32(IEEE 802)
 }
 
 void CamadaEnlaceDadosReceptora(vector<int> quadro){
