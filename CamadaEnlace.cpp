@@ -32,8 +32,8 @@ void CamadaEnlaceDadosTransmissoraControleDeErro(vector<int> quadro){
 
     switch(tipoDeControleDeErro){
         case 0:
-            //bit de paridade
-            break;void
+            CamadaEnlaceDadosTransmissoraControleDeErroBitParidadePar(quadro);
+            break;
         case 1:
             //CRC
             break;
@@ -53,7 +53,21 @@ vector<int> CamadaEnlaceDadosTransmissoraEnquadramentoInsercaoDeBytes(vector<int
 }
 
 vector<int> CamadaEnlaceDadosTransmissoraControleDeErroBitParidadePar(vector<int> quadro){
+    int cont = 0;
 
+	for (int i = 0; i < quadro.size(); i++){
+		if(quadro[i] == 1) {
+			cont++;
+		}
+	}
+    if (cont % 2 == 0){
+        quadro.push_back(0);
+    } else {
+        quadro.push_back(1);
+    }
+
+
+	return quadro;
 }
 
 vector<int> CamadaEnlaceDadosTransmissoraControleDeErroCRC(vector<int> quadro){
