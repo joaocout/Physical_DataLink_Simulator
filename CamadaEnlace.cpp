@@ -33,9 +33,12 @@ void CamadaEnlaceDadosTransmissoraControleDeErro(vector<int> quadro){
     switch(tipoDeControleDeErro){
         case 0:
             //bit de paridade
-            break;
+            break;void
         case 1:
             //CRC
+            break;
+        case 2:
+            //Hamming
             break;
     }
 
@@ -49,12 +52,16 @@ vector<int> CamadaEnlaceDadosTransmissoraEnquadramentoInsercaoDeBytes(vector<int
 
 }
 
-void CamadaEnlaceDadosTransmissoraControleDeErroBitParidadePar(){
+vector<int> CamadaEnlaceDadosTransmissoraControleDeErroBitParidadePar(vector<int> quadro){
 
 }
 
-void CamadaEnlaceDadosTransmissoraControleDeErroCRC(){
+vector<int> CamadaEnlaceDadosTransmissoraControleDeErroCRC(vector<int> quadro){
     //polinomio CRC-32(IEEE 802)
+}
+
+vector<int> CamadaEnlaceDadosTransmissoraControleDeErroCodigoHamming(vector<int> quadro){
+
 }
 
 void CamadaEnlaceDadosReceptora(vector<int> quadro){
@@ -78,7 +85,19 @@ void CamadaEnlaceDadosReceptoraEnquadramento(vector<int> quadro){
 }
 
 void CamadaEnlaceDadosReceptoraControleDeErro(vector<int> quadro){
+    int tipoDeControleDeErro = 0;
 
+    switch(tipoDeControleDeErro){
+        case 0:
+            //bit de paridade
+            break;
+        case 1:
+            //CRC
+            break;
+        case 2:
+            //codigo de hamming
+            break;
+    }
 }
 
 vector<int> CamadaEnlaceDadosReceptoraEnquadramentoContagemDeCaracteres(vector<int> quadro){
@@ -87,4 +106,16 @@ vector<int> CamadaEnlaceDadosReceptoraEnquadramentoContagemDeCaracteres(vector<i
 
 vector<int> CamadaEnlaceDadosReceptoraEnquadramentoInsercaoDeBytes(vector<int> quadro){
 
+}
+
+vector<int> CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadePar(vector<int> quadro){
+    //verificar se houve erro
+}
+
+vector<int> CamadaEnlaceDadosReceptoraControleDeErroCRC(vector<int> quadro){
+    //verificar se houve erro
+}
+
+vector<int> CamadaEnlaceDadosReceptoraControleDeErroCodigoDeHamming(vector<int> quadro){
+    //verificar se houve erro
 }

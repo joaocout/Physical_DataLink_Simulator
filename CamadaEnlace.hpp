@@ -26,4 +26,16 @@ vector<int> CamadaEnlaceDadosReceptoraEnquadramentoContagemDeCaracteres(vector<i
 
 vector<int> CamadaEnlaceDadosReceptoraEnquadramentoInsercaoDeBytes(vector<int> quadro);
 
+vector<int> CamadaEnlaceDadosTransmissoraControleDeErroBitParidadePar(vector<int> quadro);
+
+vector<int> CamadaEnlaceDadosTransmissoraControleDeErroCRC(vector<int> quadro);
+
+vector<int> CamadaEnlaceDadosTransmissoraControleDeErroCodigoHamming(vector<int> quadro);
+
+vector<int> CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadePar(vector<int> quadro);
+
+vector<int> CamadaEnlaceDadosReceptoraControleDeErroCRC(vector<int> quadro);
+
+vector<int> CamadaEnlaceDadosReceptoraControleDeErroCodigoDeHamming(vector<int> quadro);
+
 #endif

@@ -155,10 +155,19 @@ void MeioDeComunicacao(vector<int> fluxoBrutoDeBits){
     vector<int> fluxoBrutoDeBitsPontoA = fluxoBrutoDeBits, fluxoBrutoDeBitsPontoB;
 
     //passando os bits do ponto A para o ponto B
-    for(int value : fluxoBrutoDeBitsPontoA) {
-        if((rand()%100) == )
-        fluxoBrutoDeBitsPontoB.push_back(value);
+    for(int i = 0; i < fluxoBrutoDeBitsPontoA.size(); i++){
+        if((rand()%100) >= 50){
+            fluxoBrutoDeBitsPontoB.push_back(fluxoBrutoDeBitsPontoA[i]);
+        } else {
+            fluxoBrutoDeBitsPontoB.push_back(fluxoBrutoDeBitsPontoA[i] == 0 ? 1 : 0);
+        }
     }
+    // for(int value : fluxoBrutoDeBitsPontoA) {
+    //     if((rand()%100) >= 50){
+
+    //     }
+    //     fluxoBrutoDeBitsPontoB.push_back(value);
+    // }
     CamadaFisicaReceptora(fluxoBrutoDeBitsPontoB);
 }
 
