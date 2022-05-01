@@ -1,0 +1,10 @@
+void CamadaEnlaceDadosTransmissora(vector<int> quadro);
+void CamadaEnlaceDadosTransmissoraEnquadramento(vector<int> quadro);
+void CamadaEnlaceDadosTransmissoraControleDeErro(vector<int> quadro);
+void CamadaEnlaceDadosTransmissoraEnquadramentoContagemDeCaracteres(vector<int> quadro);
+void CamadaEnlaceDadosTransmissoraEnquadramentoInsercaoDeBytes(vector<int> quadro);
+void CamadaEnlaceDadosReceptora(vector<int> quadro);
+void CamadaEnlaceDadosReceptoraEnquadramento(vector<int> quadro);
+void CamadaEnlaceDadosReceptoraControleDeErro(vector<int> quadro);
+void CamadaEnlaceDadosReceptoraEnquadramentoContagemDeCaracteres(vector<int> quadro);
+void CamadaEnlaceDadosReceptoraEnquadramentoInsercaoDeBytes(vector<int> quadro);
