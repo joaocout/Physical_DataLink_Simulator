@@ -341,6 +341,7 @@ void CamadaEnlaceDadosReceptoraControleDeErro(vector<int> quadro){
     switch(tipoDeControleDeErro){
         case 0:
             //bit de paridade
+            CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadePar(quadro);
             break;
         case 1:
             //CRC
@@ -349,4 +350,20 @@ void CamadaEnlaceDadosReceptoraControleDeErro(vector<int> quadro){
             //codigo de hamming
             break;
     }
+}
+
+vector<int> CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadePar(vector<int> quadro){
+    int cont = 0;
+	for ( int i = 0; i < quadro.size(); i++){
+		if(quadro[i] == 1) {
+			cont++;
+		}
+	}
+ 
+    if (cont % 2 == 1){
+        cout << "Erro encontrado!" << endl;
+    }
+
+    quadro.pop_back();
+    return quadro;
 }
