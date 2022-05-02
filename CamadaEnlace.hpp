@@ -28,7 +28,7 @@ vector<int> CamadaEnlaceDadosReceptoraEnquadramentoInsercaoDeBytes(vector<int> q
 
 vector<int> CamadaEnlaceDadosTransmissoraControleDeErroBitParidadePar(vector<int> quadro);
 
-vector<int> CamadaEnlaceDadosTransmissoraControleDeErroCRC(vector<int> quadro);
+void CamadaEnlaceDadosTransmissoraControleDeErroCRC(vector<int> quadro);
 
 vector<int> CamadaEnlaceDadosTransmissoraControleDeErroCodigoHamming(vector<int> quadro);
 
