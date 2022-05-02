@@ -32,9 +32,9 @@ void CamadaDeAplicacaoTransmissora(string mensagem){
 
     CamadaEnlaceDadosTransmissora(quadro);
 
-    CamadaEnlaceDadosTransmissoraControleDeErroCRC(quadro);
+    // CamadaEnlaceDadosTransmissoraControleDeErroCRC(quadro);
 
-    //CamadaFisicaTransmissora(quadro);
+    // CamadaFisicaTransmissora(quadro);
 }
 
 void CamadaEnlaceDadosTransmissora(vector<int> quadro){
@@ -43,6 +43,8 @@ void CamadaEnlaceDadosTransmissora(vector<int> quadro){
     //CamadaFisicaTransmissora(quadro);
 }
 
+
+// ENQUADRAMENTO
 void CamadaEnlaceDadosTransmissoraEnquadramento(vector<int> quadro){
     int tipoDeEnquadramento = 1;
     vector<int> quadroEnquadrado;
@@ -57,24 +59,6 @@ void CamadaEnlaceDadosTransmissoraEnquadramento(vector<int> quadro){
     }
 
     CamadaEnlaceDadosReceptora(quadroEnquadrado);
-}
-
-void CamadaEnlaceDadosTransmissoraControleDeErro(vector<int> quadro){
-    int tipoDeControleDeErro = 0;
-
-    switch(tipoDeControleDeErro){
-        case 0:
-            //bit de paridade
-            break;
-        case 1:
-            //CRC
-            CamadaEnlaceDadosTransmissoraControleDeErroCRC(quadro);
-            break;
-        case 2:
-            //Hamming
-            break;
-    }
-
 }
 
 vector<int> CamadaEnlaceDadosTransmissoraEnquadramentoContagemDeCaracteres(vector<int> quadro){
@@ -100,9 +84,6 @@ vector<int> CamadaEnlaceDadosTransmissoraEnquadramentoContagemDeCaracteres(vecto
 
 vector<int> CamadaEnlaceDadosTransmissoraEnquadramentoInsercaoDeBytes(vector<int> quadro){
     vector<int> result;
-
-    for(int value : quadro) cout << value;
-    cout << endl;
 
     vector<int> esc, flag;
     string s_esc = "00011011", s_flag = "00001111";
@@ -154,8 +135,44 @@ vector<int> CamadaEnlaceDadosTransmissoraEnquadramentoInsercaoDeBytes(vector<int
 
     return result;
 }
+// FIM ENQUADRAMENTO
+
+
+// CONTROLE DE ERRO
+void CamadaEnlaceDadosTransmissoraControleDeErro(vector<int> quadro){
+    int tipoDeControleDeErro = 0;
+
+    switch(tipoDeControleDeErro){
+        case 0:
+            CamadaEnlaceDadosTransmissoraControleDeErroBitParidadePar(quadro); 
+            break;
+        case 1:
+            //CRC
+            CamadaEnlaceDadosTransmissoraControleDeErroCRC(quadro);
+            break;
+        case 2:
+            //Hamming
+            break;
+    }
+
+}
 
 vector<int> CamadaEnlaceDadosTransmissoraControleDeErroBitParidadePar(vector<int> quadro){
+
+    int cont = 0;
+
+	for (int i = 0; i < quadro.size(); i++){
+		if(quadro[i] == 1) {
+			cont++;
+		}
+	}
+    if (cont % 2 == 0){
+        quadro.push_back(0);
+    } else {
+        quadro.push_back(1);
+    }
+
+    return quadro;
 
 }
 
@@ -217,7 +234,11 @@ void CamadaEnlaceDadosTransmissoraControleDeErroCRC(vector<int> quadro){
 
 vector<int> CamadaEnlaceDadosTransmissoraControleDeErroCodigoHamming(vector<int> quadro){
 
+    return quadro;
+
 }
+// FIM CONTROLE DE ERRO
+
 
 void CamadaEnlaceDadosReceptora(vector<int> quadro){
     CamadaEnlaceDadosReceptoraEnquadramento(quadro);
@@ -225,6 +246,8 @@ void CamadaEnlaceDadosReceptora(vector<int> quadro){
     //CamadaDeAplicacaoReceptora(quadro);
 }
 
+
+// RECEPTORA ENQUADRAMENTO
 void CamadaEnlaceDadosReceptoraEnquadramento(vector<int> quadro){
     int tipoDeEnquadramento = 1;
     vector<int> quadroDesenquadrado;
@@ -235,22 +258,6 @@ void CamadaEnlaceDadosReceptoraEnquadramento(vector<int> quadro){
             break;
         case 1:
             quadroDesenquadrado = CamadaEnlaceDadosReceptoraEnquadramentoInsercaoDeBytes(quadro);
-            break;
-    }
-}
-
-void CamadaEnlaceDadosReceptoraControleDeErro(vector<int> quadro){
-    int tipoDeControleDeErro = 0;
-
-    switch(tipoDeControleDeErro){
-        case 0:
-            //bit de paridade
-            break;
-        case 1:
-            //CRC
-            break;
-        case 2:
-            //codigo de hamming
             break;
     }
 }
@@ -324,4 +331,22 @@ vector<int> CamadaEnlaceDadosReceptoraEnquadramentoInsercaoDeBytes(vector<int> q
     }
 
     return result;
+}
+// FIM RECEPTORA ENQUADRAMENTO
+
+
+void CamadaEnlaceDadosReceptoraControleDeErro(vector<int> quadro){
+    int tipoDeControleDeErro = 0;
+
+    switch(tipoDeControleDeErro){
+        case 0:
+            //bit de paridade
+            break;
+        case 1:
+            //CRC
+            break;
+        case 2:
+            //codigo de hamming
+            break;
+    }
 }
