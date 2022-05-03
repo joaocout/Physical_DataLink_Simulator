@@ -8,9 +8,9 @@ using namespace std;
 
 void CamadaEnlaceDadosTransmissora(vector<int> quadro);
 
-void CamadaEnlaceDadosTransmissoraEnquadramento(vector<int> quadro);
+vector<int> CamadaEnlaceDadosTransmissoraEnquadramento(vector<int> quadro);
 
-void CamadaEnlaceDadosTransmissoraControleDeErro(vector<int> quadro);
+vector<int> CamadaEnlaceDadosTransmissoraControleDeErro(vector<int> quadro);
 
 vector<int> CamadaEnlaceDadosTransmissoraEnquadramentoContagemDeCaracteres(vector<int> quadro);
 
@@ -18,9 +18,9 @@ vector<int> CamadaEnlaceDadosTransmissoraEnquadramentoInsercaoDeBytes(vector<int
 
 void CamadaEnlaceDadosReceptora(vector<int> quadro);
 
-void CamadaEnlaceDadosReceptoraEnquadramento(vector<int> quadro);
+vector<int> CamadaEnlaceDadosReceptoraEnquadramento(vector<int> quadro);
 
-void CamadaEnlaceDadosReceptoraControleDeErro(vector<int> quadro);
+vector<int> CamadaEnlaceDadosReceptoraControleDeErro(vector<int> quadro);
 
 vector<int> CamadaEnlaceDadosReceptoraEnquadramentoContagemDeCaracteres(vector<int> quadro);
 
@@ -28,7 +28,7 @@ vector<int> CamadaEnlaceDadosReceptoraEnquadramentoInsercaoDeBytes(vector<int> q
 
 vector<int> CamadaEnlaceDadosTransmissoraControleDeErroBitParidadePar(vector<int> quadro);
 
-void CamadaEnlaceDadosTransmissoraControleDeErroCRC(vector<int> quadro);
+vector<int> CamadaEnlaceDadosTransmissoraControleDeErroCRC(vector<int> quadro);
 
 vector<int> CamadaEnlaceDadosTransmissoraControleDeErroCodigoHamming(vector<int> quadro);
 

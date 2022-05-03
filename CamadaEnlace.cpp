@@ -39,15 +39,35 @@ void CamadaDeAplicacaoTransmissora(string mensagem){
 }
 
 void CamadaEnlaceDadosTransmissora(vector<int> quadro){
-    CamadaEnlaceDadosTransmissoraEnquadramento(quadro);
-    CamadaEnlaceDadosTransmissoraControleDeErro(quadro);
+
+    cout << "quadro original" << endl;
+
+    for (int value: quadro) cout << value;
+    cout << endl;
+
+    cout << "quadro apos enquadrar" << endl;
+
+    vector<int> quadro_apos_enquadramento = CamadaEnlaceDadosTransmissoraEnquadramento(quadro);
+
+    for(int value: quadro_apos_enquadramento) cout << value;
+    cout << endl;
+
+    cout << "quadro apos controle" << endl;
+    
+    vector<int> quadro_apos_controle = CamadaEnlaceDadosTransmissoraControleDeErro(quadro_apos_enquadramento);
+
+    for(int value : quadro_apos_controle) cout << value;
+    cout << endl;
+
+    CamadaEnlaceDadosReceptora(quadro_apos_controle);
+
     //CamadaFisicaTransmissora(quadro);
 }
 
 
 // ENQUADRAMENTO
-void CamadaEnlaceDadosTransmissoraEnquadramento(vector<int> quadro){
-    int tipoDeEnquadramento = 1;
+vector<int> CamadaEnlaceDadosTransmissoraEnquadramento(vector<int> quadro){
+    int tipoDeEnquadramento = 0;
     vector<int> quadroEnquadrado;
 
     switch(tipoDeEnquadramento){
@@ -59,7 +79,7 @@ void CamadaEnlaceDadosTransmissoraEnquadramento(vector<int> quadro){
             break;
     }
 
-    CamadaEnlaceDadosReceptora(quadroEnquadrado);
+    return quadroEnquadrado;
 }
 
 vector<int> CamadaEnlaceDadosTransmissoraEnquadramentoContagemDeCaracteres(vector<int> quadro){
@@ -140,22 +160,24 @@ vector<int> CamadaEnlaceDadosTransmissoraEnquadramentoInsercaoDeBytes(vector<int
 
 
 // CONTROLE DE ERRO
-void CamadaEnlaceDadosTransmissoraControleDeErro(vector<int> quadro){
-    int tipoDeControleDeErro = 2;
+vector<int> CamadaEnlaceDadosTransmissoraControleDeErro(vector<int> quadro){
+    int tipoDeControleDeErro = 0;
 
     switch(tipoDeControleDeErro){
         case 0:
-            CamadaEnlaceDadosTransmissoraControleDeErroBitParidadePar(quadro); 
+            return CamadaEnlaceDadosTransmissoraControleDeErroBitParidadePar(quadro); 
             break;
         case 1:
             //CRC
-            CamadaEnlaceDadosTransmissoraControleDeErroCRC(quadro);
+            return CamadaEnlaceDadosTransmissoraControleDeErroCRC(quadro);
             break;
         case 2:
             //Hamming
-            CamadaEnlaceDadosTransmissoraControleDeErroCodigoHamming(quadro);
+            return CamadaEnlaceDadosTransmissoraControleDeErroCodigoHamming(quadro);
             break;
     }
+
+    return quadro;
 
 }
 
@@ -178,7 +200,7 @@ vector<int> CamadaEnlaceDadosTransmissoraControleDeErroBitParidadePar(vector<int
 
 }
 
-void CamadaEnlaceDadosTransmissoraControleDeErroCRC(vector<int> quadro){
+vector<int> CamadaEnlaceDadosTransmissoraControleDeErroCRC(vector<int> quadro){
     static uint32_t tabela[256];
     bool tabelaCriada = false;
     uint32_t resto, crc = 0;
@@ -235,6 +257,8 @@ void CamadaEnlaceDadosTransmissoraControleDeErroCRC(vector<int> quadro){
     //printf("\n%" PRIX32 "\n", ~crc);
 
     //polinomio CRC-32(IEEE 802)
+
+    return quadro;
 }
 
 vector<int> CamadaEnlaceDadosTransmissoraControleDeErroCodigoHamming(vector<int> quadro) {
@@ -284,15 +308,28 @@ vector<int> CamadaEnlaceDadosTransmissoraControleDeErroCodigoHamming(vector<int>
 
 
 void CamadaEnlaceDadosReceptora(vector<int> quadro){
-    CamadaEnlaceDadosReceptoraEnquadramento(quadro);
-    CamadaEnlaceDadosReceptoraControleDeErro(quadro);
+
+    cout << "receptor: quadro apos controle de erro" << endl;
+
+    vector<int> receptor_controle = CamadaEnlaceDadosReceptoraControleDeErro(quadro);
+
+    for(int value : receptor_controle) cout << value;
+    cout << endl;
+
+    cout << "receptor: quadro apos desenquadramento" << endl;
+
+    vector<int> receptor_desenquadramento = CamadaEnlaceDadosReceptoraEnquadramento(quadro);
+
+    for(int value : receptor_desenquadramento) cout << value;
+    cout << endl;
+
     //CamadaDeAplicacaoReceptora(quadro);
 }
 
 
 // RECEPTORA ENQUADRAMENTO
-void CamadaEnlaceDadosReceptoraEnquadramento(vector<int> quadro){
-    int tipoDeEnquadramento = 1;
+vector<int> CamadaEnlaceDadosReceptoraEnquadramento(vector<int> quadro){
+    int tipoDeEnquadramento = 0;
     vector<int> quadroDesenquadrado;
 
     switch(tipoDeEnquadramento){
@@ -303,6 +340,8 @@ void CamadaEnlaceDadosReceptoraEnquadramento(vector<int> quadro){
             quadroDesenquadrado = CamadaEnlaceDadosReceptoraEnquadramentoInsercaoDeBytes(quadro);
             break;
     }
+
+    return quadroDesenquadrado;
 }
 
 vector<int> CamadaEnlaceDadosReceptoraEnquadramentoContagemDeCaracteres(vector<int> quadro){
@@ -379,21 +418,25 @@ vector<int> CamadaEnlaceDadosReceptoraEnquadramentoInsercaoDeBytes(vector<int> q
 
 
 // RECEPTORA CONTROLE DE ERRO
-void CamadaEnlaceDadosReceptoraControleDeErro(vector<int> quadro){
+vector<int> CamadaEnlaceDadosReceptoraControleDeErro(vector<int> quadro){
     int tipoDeControleDeErro = 0;
 
     switch(tipoDeControleDeErro){
         case 0:
             //bit de paridade
-            CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadePar(quadro);
+            return CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadePar(quadro);
             break;
         case 1:
             //CRC
+            return CamadaEnlaceDadosReceptoraControleDeErroCRC(quadro);
             break;
         case 2:
             //codigo de hamming
+            return CamadaEnlaceDadosReceptoraControleDeErroCodigoDeHamming(quadro);
             break;
     }
+
+    return quadro;
 }
 
 vector<int> CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadePar(vector<int> quadro){
@@ -414,14 +457,81 @@ vector<int> CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadePar(vector<int>
 
 vector<int> CamadaEnlaceDadosReceptoraControleDeErroCodigoDeHamming(vector<int> quadro) {
 
+    int m, r = 0, parity;    
+    m = quadro.size();
+    int err[10]={0};
+    int flag = 1, ec = 0;
+    
+    while(pow (2,r) < m + r + 1){
+        r++;
+    }
+    
+    int j = 0,k = 0;    
+    int x, min, max = 0;
+    for (int i = 1; i <= m + r; i = pow (2, k)){
+      k++;
+      parity = 0;
+      j = i;
+      x = i;
+      min = 1;
+      max = i;
+       while ( j <= m + r){
+          for (x = j; max >= min && x <= m + r; min++, x++){
+              if (quadro[x-1] == 1)
+                  parity = parity + 1;;
+          }
+          j = x + i;
+          min = 1;
+      }
+      
+      //checking for even parity
+      if (parity % 2 == 0){ 
+         err[i] = 0;
+      }
+      else{
+        err[i] = 1;
+      }
+      ec++;
+    }
+    
+    int a = 1;
+    while(a < m) {
+        if(err[a-1] == 1){
+            flag = 0;
+            break;
+        }
+        a *= 2;
+    }   
 
+    if(flag == 0) {
+        int pos = 0;
+        cout << "Error detected at: ";
 
+        for(int i = r-1; i >= 0; i--) {
+            cout << err[i] << " ";
+            if(err[i] == 1)
+                pos += pow(2,i);
+        }
+
+        cout << "\nPosition of error :" << pos;
+        quadro[pos] = !quadro[pos];
+        
+        cout<<"\nAfter correction: ";
+        for(int i = 0; i < m+r; i++)
+          cout<< quadro[i] <<" ";
+    }    
+    else
+       cout<<"No Error detected. ";
+    
+    cout << endl;
     return quadro;
+
 }
-// FIM RECEPTORA CONTROLE DE ERRO
+
 vector<int> CamadaEnlaceDadosReceptoraControleDeErroCRC(vector<int> quadro){
     
     return quadro;
 
     //verificar se houve erro
 }
+// FIM CAMADA RECEPTORA CONTROLE DE ERRO
