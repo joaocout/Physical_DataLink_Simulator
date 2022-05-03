@@ -184,7 +184,7 @@ void CamadaEnlaceDadosTransmissoraControleDeErroCRC(vector<int> quadro){
     uint32_t resto, crc = 0;
     uint8_t octeto;
     const char *p, *q;
-    vector < int >resultado;
+    vector<int>resultado;
 
     if (!tabelaCriada){
         for (int i = 0; i < 256; i++){
@@ -208,12 +208,12 @@ void CamadaEnlaceDadosTransmissoraControleDeErroCRC(vector<int> quadro){
     //transformando o quadro pra string de bits, pra facilitar conversao
     string string_quadro = "";
     for (int bit:quadro){
-        string_quadro.append(to_string (bit));
+        string_quadro.append(to_string(bit));
     }
     string mensagem = "";
     //transformando os bitsets de tamanho 8, de volta para char, de acordo com a tabela ascii
     for (unsigned int i = 0; i < string_quadro.size(); i += 8){
-        mensagem.push_back((char) bitset < 8 > (string_quadro.substr(i, 8)).to_ullong());
+        mensagem.push_back((char) bitset <8> (string_quadro.substr(i, 8)).to_ullong());
     }
     q = &mensagem[0] + mensagem.size();
     for (p = &mensagem[0]; p < q; p++){
@@ -221,15 +221,18 @@ void CamadaEnlaceDadosTransmissoraControleDeErroCRC(vector<int> quadro){
         crc = (crc >> 8) ^ tabela[(crc & 0xff) ^ octeto];
     }
 
-    cout << crc << endl;
-    printf("%" PRIX32 "\n", ~crc);
-
-    // const string aux = to_string (~crc);
-    // for (int i = 0; i < 32; i++){
-    //     resultado.push_back((int) aux[i]);
+    bitset<32> bitsCrc(crc);
+    //cout << bitsCrc << endl;
+    string crcToConvert = (bitsCrc.to_string());
+    for(int k = 0; k < crcToConvert.size(); k++){
+        quadro.push_back(crcToConvert[k]-'0');
+    }
+    
+    // for (int element : quadro){
+    //     cout << element;
     // }
-    //return resultado;
-    //return ~crc;
+
+    //printf("\n%" PRIX32 "\n", ~crc);
 
     //polinomio CRC-32(IEEE 802)
 }
@@ -510,3 +513,6 @@ vector<int> CamadaEnlaceDadosReceptoraControleDeErroCodigoDeHamming(vector<int> 
     return quadro;
 }
 // FIM RECEPTORA CONTROLE DE ERRO
+vector<int> CamadaEnlaceDadosReceptoraControleDeErroCRC(vector<int> quadro){
+    //verificar se houve erro
+}
