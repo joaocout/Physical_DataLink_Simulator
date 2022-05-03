@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "CamadaFisica.hpp"
+#include "CamadaEnlace.hpp"
 
 using namespace std;
 
@@ -14,8 +15,8 @@ int main(){
 }
 */
 
-int encoding;
-
+int encoding = 0;
+/*
 void AplicacaoTransmissora(string input, int selected_encoding){
     //string mensagem;
     //std::cout << "Digite uma mensagem:" << endl;
@@ -26,8 +27,8 @@ void AplicacaoTransmissora(string input, int selected_encoding){
 
     CamadaDeAplicacaoTransmissora(input);
 }
-
-
+*/
+/*
 void CamadaDeAplicacaoTransmissora(string mensagem){
     //usando vector de int, ao inves de int[], por ser um recurso padrao do c++
     //vector tem tamanho variavel, e nos auxilia com certas funcionalidades
@@ -45,14 +46,14 @@ void CamadaDeAplicacaoTransmissora(string mensagem){
 
     CamadaFisicaTransmissora(quadro);
 }
-
+*/
 
 void CamadaFisicaTransmissora(vector<int> quadro){
     int tipoDeCodificacao = encoding;
     vector<int> fluxoBrutoDeBits;
 
 
-    cout << endl << "Mensagem após transformação para bits: " << endl;
+    cout << endl << "Mensagem recebida pela camada física: " << endl;
     for(int bit: quadro){
         cout << bit;
     }
@@ -156,7 +157,7 @@ void MeioDeComunicacao(vector<int> fluxoBrutoDeBits){
 
     //passando os bits do ponto A para o ponto B
     for(int i = 0; i < fluxoBrutoDeBitsPontoA.size(); i++){
-        if((rand()%100) >= 50){
+        if((rand()%100) >= porcentagemDeErros){
             fluxoBrutoDeBitsPontoB.push_back(fluxoBrutoDeBitsPontoA[i]);
         } else {
             fluxoBrutoDeBitsPontoB.push_back(fluxoBrutoDeBitsPontoA[i] == 0 ? 1 : 0);
@@ -165,9 +166,9 @@ void MeioDeComunicacao(vector<int> fluxoBrutoDeBits){
     // for(int value : fluxoBrutoDeBitsPontoA) {
     //     if((rand()%100) >= 50){
 
-    //     }
-    //     fluxoBrutoDeBitsPontoB.push_back(value);
-    // }
+     //    }
+    //         fluxoBrutoDeBitsPontoB.push_back(value);
+   //  }
     CamadaFisicaReceptora(fluxoBrutoDeBitsPontoB);
 }
 
@@ -198,7 +199,8 @@ void CamadaFisicaReceptora(vector<int> quadro){
     }
     cout << endl;
 
-    CamadaDeAplicacaoReceptora(fluxoBrutoDeBits);
+    //CamadaDeAplicacaoReceptora(fluxoBrutoDeBits);
+    CamadaEnlaceDadosReceptora(fluxoBrutoDeBits);
 }
 
 

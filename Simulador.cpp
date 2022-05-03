@@ -1,6 +1,6 @@
 #include <gtkmm.h>
 #include <iostream>
-#include "CamadaFisica.hpp"
+#include "CamadaEnlace.hpp"
 
 class Simulador : public Gtk::Window
 {

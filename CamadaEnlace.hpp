@@ -5,6 +5,9 @@ using namespace std;
 #ifndef CAMADAENLACE
 #define CAMADAENLACE
 
+void AplicacaoTransmissora(string input, int enconding);
+
+void CamadaDeAplicacaoTransmissora(string msg, int encoding);
 
 void CamadaEnlaceDadosTransmissora(vector<int> quadro);
 

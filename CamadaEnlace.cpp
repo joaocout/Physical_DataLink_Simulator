@@ -9,11 +9,8 @@
 
 using namespace std;
 
-int main(){
-    string test;
-    getline(std::cin, test);
-    CamadaDeAplicacaoTransmissora(test);
-    return 0;
+void AplicacaoTransmissora(string input, int encoding) {
+    CamadaDeAplicacaoTransmissora(input);
 }
 
 void CamadaDeAplicacaoTransmissora(string mensagem){
@@ -40,28 +37,27 @@ void CamadaDeAplicacaoTransmissora(string mensagem){
 
 void CamadaEnlaceDadosTransmissora(vector<int> quadro){
 
-    cout << "quadro original" << endl;
+    cout << "Quadro original:" << endl;
 
     for (int value: quadro) cout << value;
     cout << endl;
 
-    cout << "quadro apos enquadrar" << endl;
+    cout << "Quadro apos enquadrar:" << endl;
 
     vector<int> quadro_apos_enquadramento = CamadaEnlaceDadosTransmissoraEnquadramento(quadro);
 
     for(int value: quadro_apos_enquadramento) cout << value;
     cout << endl;
 
-    cout << "quadro apos controle" << endl;
+    cout << "Quadro apos controle:" << endl;
     
     vector<int> quadro_apos_controle = CamadaEnlaceDadosTransmissoraControleDeErro(quadro_apos_enquadramento);
 
     for(int value : quadro_apos_controle) cout << value;
     cout << endl;
 
-    CamadaEnlaceDadosReceptora(quadro_apos_controle);
-
-    //CamadaFisicaTransmissora(quadro);
+    // enviando para a camada fisica
+    CamadaFisicaTransmissora(quadro_apos_controle);
 }
 
 
@@ -309,21 +305,21 @@ vector<int> CamadaEnlaceDadosTransmissoraControleDeErroCodigoHamming(vector<int>
 
 void CamadaEnlaceDadosReceptora(vector<int> quadro){
 
-    cout << "receptor: quadro apos controle de erro" << endl;
+    cout << "Receptor: Quadro apos controle de erro:" << endl;
 
     vector<int> receptor_controle = CamadaEnlaceDadosReceptoraControleDeErro(quadro);
 
     for(int value : receptor_controle) cout << value;
     cout << endl;
 
-    cout << "receptor: quadro apos desenquadramento" << endl;
+    cout << "Receptor: Quadro apos desenquadramento" << endl;
 
     vector<int> receptor_desenquadramento = CamadaEnlaceDadosReceptoraEnquadramento(quadro);
 
     for(int value : receptor_desenquadramento) cout << value;
     cout << endl;
 
-    //CamadaDeAplicacaoReceptora(quadro);
+    CamadaDeAplicacaoReceptora(receptor_desenquadramento);
 }
 
 
