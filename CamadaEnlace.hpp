@@ -7,7 +7,7 @@ using namespace std;
 
 void AplicacaoTransmissora(string input, int enconding);
 
-void CamadaDeAplicacaoTransmissora(string msg, int encoding);
+void CamadaDeAplicacaoTransmissora(string msg);
 
 void CamadaEnlaceDadosTransmissora(vector<int> quadro);
 
