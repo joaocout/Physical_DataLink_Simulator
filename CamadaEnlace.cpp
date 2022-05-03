@@ -240,10 +240,6 @@ void CamadaEnlaceDadosTransmissoraControleDeErroCRC(vector<int> quadro){
 vector<int> CamadaEnlaceDadosTransmissoraControleDeErroCodigoHamming(vector<int> quadro) {
     // a = 0110 0001
     // hamming = 110111010001
-    cout << "before: ";
-    for(int value: quadro) cout << value;
-    cout << endl;
-
     int prox_bit_ver = 1;
     for(int i = 0; i<quadro.size(); i++) {
 
@@ -267,7 +263,11 @@ vector<int> CamadaEnlaceDadosTransmissoraControleDeErroCodigoHamming(vector<int>
             bitset<32> index (i+1);
 
             for(int j = 0; j < index.size(); j++) {
-                if(index[j] == 1) quadro[pow(2, j) - 1] += quadro[i];
+                if(index[j] == 1) {
+                    if(quadro[i] == 1) {
+                        quadro[pow(2, j) - 1] = (quadro[pow(2, j) - 1] == 1? 0 : 1);
+                    }
+                }
             }
 
         }
@@ -277,102 +277,8 @@ vector<int> CamadaEnlaceDadosTransmissoraControleDeErroCodigoHamming(vector<int>
 
     }
     
-    prox_bit_ver = 1;
-    for(int i = 0; i<quadro.size(); i++) {
-
-        // se for um dos bits de redundancia
-        if(prox_bit_ver - 1 == i) {
-            
-            // eh impar, bit deve ser 1
-            if(quadro[i]%2 == 1) quadro[i] = 1;
-            else quadro[i] = 0;
-            
-
-            prox_bit_ver*=2;
-        }
-
-    }
-
-    for(int value : quadro) {
-        cout << value;
-    }
-
-    cout << endl;
-
-    cout << "after: ";
-    for(int value: quadro) cout << value;
-    cout << endl;
-
     return quadro;
 
-    /*
-    
-
-int m, r = 0, parity;    //m = no. of data bits, r = no. of redundant bits
-    
-    m = quadro.size();
-    
-    //finding no. of redundant bits
-    while(pow (2,r) < m + r + 1){
-        r++;
-    }
-    
-    int hamming[m + r],j = 0,k = 0;    
-    
-    //finding positions of redundant bits.
-    for(int i = 1; i <= m + r; i++){
-        
-        if( i == pow( 2, j )){
-            hamming[i] = -1;    //-1 is initial value of redundant bits
-            j++;
-        }
-        else{
-            hamming[i] = quadro[k];
-            k++;
-        }
-    }
-
-    for(int i = 1; i <= m + r; i++)
-    cout<<hamming[i]<<" ";
-
-    cout << endl;
-    
-    k = 0;
-    int x, min, max = 0;
-    //finding parity bit
-    for (int i = 1; i <= m + r; i = pow (2, k)){
-      k++;
-      parity = 0;
-      j = i;
-      x = i;
-      min = 1;
-      max = i;
-       while ( j <= m + r){
-          for (x = j; max >= min && x <= m + r; min++, x++){
-              if (hamming[x] == 1)
-                  parity = parity + 1;;
-          }
-          j = x + i;
-          min = 1;
-      }
-      
-      //checking for even parity
-      if (parity % 2 == 0){ 
-         hamming[i] = 0;
-      }
-      else{
-        hamming[i] = 1;
-      }
-  }
-    
-    cout<<"\nHamming code is: ";
-    for(int i = 1; i <= m + r; i++)
-        cout<<hamming[i]<<" ";
-
-    cout << endl;
-
-
-    */
 }
 // FIM CONTROLE DE ERRO
 
@@ -514,5 +420,8 @@ vector<int> CamadaEnlaceDadosReceptoraControleDeErroCodigoDeHamming(vector<int> 
 }
 // FIM RECEPTORA CONTROLE DE ERRO
 vector<int> CamadaEnlaceDadosReceptoraControleDeErroCRC(vector<int> quadro){
+    
+    return quadro;
+
     //verificar se houve erro
 }
