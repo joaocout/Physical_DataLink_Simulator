@@ -2,6 +2,7 @@
 #include <string>
 #include <bitset>
 #include <vector>
+#include <math.h>
 #include "CamadaFisica.hpp"
 #include "CamadaEnlace.hpp"
 #include <inttypes.h>
@@ -140,7 +141,7 @@ vector<int> CamadaEnlaceDadosTransmissoraEnquadramentoInsercaoDeBytes(vector<int
 
 // CONTROLE DE ERRO
 void CamadaEnlaceDadosTransmissoraControleDeErro(vector<int> quadro){
-    int tipoDeControleDeErro = 0;
+    int tipoDeControleDeErro = 2;
 
     switch(tipoDeControleDeErro){
         case 0:
@@ -152,6 +153,7 @@ void CamadaEnlaceDadosTransmissoraControleDeErro(vector<int> quadro){
             break;
         case 2:
             //Hamming
+            CamadaEnlaceDadosTransmissoraControleDeErroCodigoHamming(quadro);
             break;
     }
 
@@ -232,10 +234,142 @@ void CamadaEnlaceDadosTransmissoraControleDeErroCRC(vector<int> quadro){
     //polinomio CRC-32(IEEE 802)
 }
 
-vector<int> CamadaEnlaceDadosTransmissoraControleDeErroCodigoHamming(vector<int> quadro){
+vector<int> CamadaEnlaceDadosTransmissoraControleDeErroCodigoHamming(vector<int> quadro) {
+    // a = 0110 0001
+    // hamming = 110111010001
+    cout << "before: ";
+    for(int value: quadro) cout << value;
+    cout << endl;
+
+    int prox_bit_ver = 1;
+    for(int i = 0; i<quadro.size(); i++) {
+
+        if(prox_bit_ver - 1 == i) {
+            // proximo bit de verificacao eh a proxima potencia de 2 (1, 2, 4, 8, ...)
+            prox_bit_ver *= 2;
+
+            // inserimos 0 na posicao i, por enquanto
+            vector<int> temp = {0}; 
+            quadro.insert(quadro.begin()+i, temp.begin(), temp.end());
+
+        }
+    }
+
+    prox_bit_ver = 1;
+    //somando bits 1 e salvando no proprio quadro
+    for(int i = 0; i<quadro.size(); i++) {
+
+        // pulamos bits de verificacao
+        if(prox_bit_ver - 1 != i) {
+            bitset<32> index (i+1);
+
+            for(int j = 0; j < index.size(); j++) {
+                if(index[j] == 1) quadro[pow(2, j) - 1] += quadro[i];
+            }
+
+        }
+        else {
+            prox_bit_ver *= 2;
+        }
+
+    }
+    
+    prox_bit_ver = 1;
+    for(int i = 0; i<quadro.size(); i++) {
+
+        // se for um dos bits de redundancia
+        if(prox_bit_ver - 1 == i) {
+            
+            // eh impar, bit deve ser 1
+            if(quadro[i]%2 == 1) quadro[i] = 1;
+            else quadro[i] = 0;
+            
+
+            prox_bit_ver*=2;
+        }
+
+    }
+
+    for(int value : quadro) {
+        cout << value;
+    }
+
+    cout << endl;
+
+    cout << "after: ";
+    for(int value: quadro) cout << value;
+    cout << endl;
 
     return quadro;
 
+    /*
+    
+
+int m, r = 0, parity;    //m = no. of data bits, r = no. of redundant bits
+    
+    m = quadro.size();
+    
+    //finding no. of redundant bits
+    while(pow (2,r) < m + r + 1){
+        r++;
+    }
+    
+    int hamming[m + r],j = 0,k = 0;    
+    
+    //finding positions of redundant bits.
+    for(int i = 1; i <= m + r; i++){
+        
+        if( i == pow( 2, j )){
+            hamming[i] = -1;    //-1 is initial value of redundant bits
+            j++;
+        }
+        else{
+            hamming[i] = quadro[k];
+            k++;
+        }
+    }
+
+    for(int i = 1; i <= m + r; i++)
+    cout<<hamming[i]<<" ";
+
+    cout << endl;
+    
+    k = 0;
+    int x, min, max = 0;
+    //finding parity bit
+    for (int i = 1; i <= m + r; i = pow (2, k)){
+      k++;
+      parity = 0;
+      j = i;
+      x = i;
+      min = 1;
+      max = i;
+       while ( j <= m + r){
+          for (x = j; max >= min && x <= m + r; min++, x++){
+              if (hamming[x] == 1)
+                  parity = parity + 1;;
+          }
+          j = x + i;
+          min = 1;
+      }
+      
+      //checking for even parity
+      if (parity % 2 == 0){ 
+         hamming[i] = 0;
+      }
+      else{
+        hamming[i] = 1;
+      }
+  }
+    
+    cout<<"\nHamming code is: ";
+    for(int i = 1; i <= m + r; i++)
+        cout<<hamming[i]<<" ";
+
+    cout << endl;
+
+
+    */
 }
 // FIM CONTROLE DE ERRO
 
@@ -335,6 +469,7 @@ vector<int> CamadaEnlaceDadosReceptoraEnquadramentoInsercaoDeBytes(vector<int> q
 // FIM RECEPTORA ENQUADRAMENTO
 
 
+// RECEPTORA CONTROLE DE ERRO
 void CamadaEnlaceDadosReceptoraControleDeErro(vector<int> quadro){
     int tipoDeControleDeErro = 0;
 
@@ -367,3 +502,11 @@ vector<int> CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadePar(vector<int>
     quadro.pop_back();
     return quadro;
 }
+
+vector<int> CamadaEnlaceDadosReceptoraControleDeErroCodigoDeHamming(vector<int> quadro) {
+
+
+
+    return quadro;
+}
+// FIM RECEPTORA CONTROLE DE ERRO
